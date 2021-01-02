@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByUserName(String username) {
-        return null;
+        User userEntity = userRepository.findByUserName(username);
+        return userMapper.convertToDto(userEntity);
     }
 
     @Override
@@ -43,6 +44,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO update(UserDTO dto) {
+        User user = userMapper.convertToEntity(dto);
+        // TODO
+        //  create method to update user entity in User repository
         return null;
     }
 

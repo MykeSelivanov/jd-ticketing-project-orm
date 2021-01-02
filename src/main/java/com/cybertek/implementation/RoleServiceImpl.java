@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +26,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<RoleDTO> listAllRoles() {
         List<Role> roleEntityList = roleRepository.findAll();
-
         return roleEntityList.stream().map(roleEntity -> {return roleMapper.convertToDto(roleEntity);}).collect(Collectors.toList());
     }
 
     @Override
     public RoleDTO findById(Long id) {
         Role roleEntity = roleRepository.findById(id).get();
-
         return roleMapper.convertToDto(roleEntity);
     }
 
