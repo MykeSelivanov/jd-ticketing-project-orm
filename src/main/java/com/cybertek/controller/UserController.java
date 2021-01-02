@@ -23,26 +23,18 @@ public class UserController {
 
     @GetMapping("/create")
     public String createUser(Model model){
-
         model.addAttribute("user",new UserDTO());
-
-//        List<String> roles = new ArrayList<>();
-//        roleService.findAll().stream().forEach(roleDTO -> roles.add(roleDTO.getDescription()));
-        model.addAttribute("roles", roleService.listAllRoles());//.stream().map(RoleDTO::getDescription).collect(Collectors.toList()));
-
-//        model.addAttribute("users", userService.findAll());
-
+        model.addAttribute("roles", roleService.listAllRoles());
+        model.addAttribute("users", userService.listAllUsers());
         return "/user/create";
     }
 
-//    @PostMapping("/create")
-//    public String insertUser(UserDTO user, Model model){
-//
-//        userService.save(user);
-//
-//        return "redirect:/user/create";
-//    }
-//
+    @PostMapping("/create")
+    public String insertUser(UserDTO user, Model model){
+        userService.save(user);
+        return "redirect:/user/create";
+    }
+
 //    @GetMapping("/update/{username}")
 //    public String editUser(@PathVariable("username") String username, Model model){
 //
