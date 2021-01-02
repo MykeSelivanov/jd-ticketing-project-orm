@@ -1,6 +1,7 @@
 package com.cybertek.converter;
 
 import com.cybertek.dto.UserDTO;
+import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.core.convert.converter.Converter;
@@ -10,15 +11,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationPropertiesBinding
 public class UserDTOConverter implements Converter<String, UserDTO> {
 
+    @Autowired
     UserService userService;
 
-    @Autowired
-    public UserDTOConverter(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public UserDTO convert(String source) {
-        return userService.findById(source);
+        return userService.findByUserName(source);
     }
 }
