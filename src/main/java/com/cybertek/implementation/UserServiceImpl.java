@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
     // hard delete (not a good practice, no one deletes data from the database)
     @Override
     public void deleteByUserName(String username) {
+
         userRepository.deleteByUserName(username);
     }
 

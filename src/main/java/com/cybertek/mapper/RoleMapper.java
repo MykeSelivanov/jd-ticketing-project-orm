@@ -13,10 +13,12 @@ public class RoleMapper {
 
     @Autowired
     public RoleMapper(ModelMapper modelMapper) {
+
         this.modelMapper = modelMapper;
     }
 
     public Role convertToEntity(RoleDTO dto){
+
         return modelMapper.map(dto, Role.class);
     }
 
