@@ -15,6 +15,7 @@ public class RoleDTOConverter implements Converter<String,RoleDTO> {
 
     @Autowired
     public RoleDTOConverter(RoleService roleService) {
+
         this.roleService = roleService;
     }
 
@@ -22,7 +23,6 @@ public class RoleDTOConverter implements Converter<String,RoleDTO> {
     public RoleDTO convert(String source) {
 
         Long id = Long.parseLong(source);
-
         return roleService.findById(id);
     }
 
