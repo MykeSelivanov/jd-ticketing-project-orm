@@ -26,6 +26,7 @@ public class Project extends BaseEntity {
 
     private LocalDate startDate;
     private LocalDate endDate;
+
     private Status projectStatus;
     private String projectDetail;
 

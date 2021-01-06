@@ -21,6 +21,7 @@ public class BaseEntity {
 
     private LocalDateTime insertDateTime;
     private Long insertUserId;
+
     private LocalDateTime lastUpdateDateTime;
     private Long lastUpdateUserId;
 
@@ -39,5 +40,6 @@ public class BaseEntity {
         this.lastUpdateDateTime = LocalDateTime.now();
         this.lastUpdateUserId = 1L;
     }
+
 
 }
