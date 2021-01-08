@@ -3,6 +3,9 @@ package com.cybertek.controller;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.enums.Status;
+import com.cybertek.service.ProjectService;
+import com.cybertek.service.TaskService;
+import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,42 +21,33 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/task")
 public class TaskController {
-//
-//    ProjectService projectService;
-//    UserService userService;
-//    TaskService taskService;
-//
-//    @Autowired
-//    public TaskController(ProjectService projectService, UserService userService, TaskService taskService) {
-//        this.projectService = projectService;
-//        this.userService = userService;
-//        this.taskService = taskService;
-//    }
-//
-//    @GetMapping("/create")
-//    public String createTask(Model model){
-//
-//        model.addAttribute("task", new TaskDTO());
-//        model.addAttribute("projects", projectService.findAll());
-//        model.addAttribute("employees", userService.findAll());
-//        model.addAttribute("tasks", taskService.findAll());
-//
-//        return "task/create";
-//    }
-//
-//    @PostMapping("/create")
-//    public String insertTask(Model model, TaskDTO task){
-//
-//        task.setTaskStatus(Status.OPEN);
-//        task.setAssignedDate(LocalDate.now());
-//        task.setId(UUID.randomUUID().getMostSignificantBits());
-//
-//        System.out.println("Auto generated ID: " + task.getId());
-//
-//        taskService.save(task);
-//
-//        return "redirect:/task/create";
-//    }
+
+    ProjectService projectService;
+    UserService userService;
+    TaskService taskService;
+
+    @Autowired
+    public TaskController(ProjectService projectService, UserService userService, TaskService taskService) {
+        this.projectService = projectService;
+        this.userService = userService;
+        this.taskService = taskService;
+    }
+
+    @GetMapping("/create")
+    public String createTask(Model model){
+        model.addAttribute("task", new TaskDTO());
+        model.addAttribute("projects", projectService.listAllProjects());
+        model.addAttribute("employees", userService.listAllByRole("Employee"));
+        model.addAttribute("tasks", taskService.listAllTasks());
+        return "task/create";
+    }
+
+    @PostMapping("/create")
+    public String insertTask(Model model, TaskDTO task){
+        taskService.save(task);
+
+        return "redirect:/task/create";
+    }
 //
 //    @GetMapping("/delete/{id}")
 //    public String deleteTask(@PathVariable("id") Long id){

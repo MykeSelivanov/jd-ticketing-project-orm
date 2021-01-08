@@ -1,7 +1,6 @@
 package com.cybertek.converter;
 
 import com.cybertek.dto.TaskDTO;
-import com.cybertek.entity.Task;
 import com.cybertek.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
