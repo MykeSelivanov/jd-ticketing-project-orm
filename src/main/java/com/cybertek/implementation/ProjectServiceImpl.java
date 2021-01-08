@@ -30,8 +30,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO getByProjectCode(String code) {
-
-        return null;
+        Project projectEntity = projectRepository.findByProjectCode(code);
+        return projectMapper.convertToDto(projectEntity);
     }
 
     @Override
@@ -49,9 +49,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectDTO update(ProjectDTO dto) {
-
-        return null;
+    public void update(ProjectDTO dto) {
+        Project projectEntity = projectRepository.findByProjectCode(dto.getProjectCode());
+        Project convertedProject = projectMapper.convertToEntity(dto);
+        convertedProject.setId(projectEntity.getId());
+        convertedProject.setProjectStatus(projectEntity.getProjectStatus());
+        projectRepository.save(convertedProject);
     }
 
     @Override
