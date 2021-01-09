@@ -46,7 +46,6 @@ public class ProjectController {
         return "redirect:/project/create";
     }
 
-
     @GetMapping("/delete/{projectcode}")
     public String deleteProject(@PathVariable("projectcode") String projectCode){
         projectService.delete(projectCode);
@@ -73,18 +72,17 @@ public class ProjectController {
         return "redirect:/project/create";
     }
 
-//    @GetMapping("/manager/complete/{projectcode}")
-//    public String completeProjectAsManager(@PathVariable("projectcode") String projectCode){
-//
-//        projectService.complete(projectService.findById(projectCode));
-//        return "redirect:/project/manager/complete";
-//    }
-
     @GetMapping("/manager/complete")
     public String getProjectByManager(Model model){
         List<ProjectDTO> projects = projectService.listAllProjectDetails();
         model.addAttribute("projects", projects);
         return "/manager/project-status";
+    }
+
+    @GetMapping("/manager/complete/{projectcode}")
+    public String completeProjectAsManager(@PathVariable("projectcode") String projectCode){
+        projectService.complete(projectCode);
+        return "redirect:/project/manager/complete";
     }
 //
 //    List<ProjectDTO> getCountedListOfProjectDTO(UserDTO manager){
