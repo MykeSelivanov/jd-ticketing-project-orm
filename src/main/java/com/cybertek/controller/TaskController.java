@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -72,18 +73,20 @@ public class TaskController {
         return "redirect:/task/create";
     }
 
-//    @GetMapping("/employee/pending-task/update/{id}")
-//    public String updateTaskStatus(@PathVariable("id") Long id, Model model) {
-//
-//        UserDTO employee = userService.findById("craig@cybertek.com");
-//
-//        model.addAttribute("tasks", taskService.findTaskByEmployee(employee));
-//        model.addAttribute("task", taskService.findById(id));
-//        model.addAttribute("statusList", Arrays.asList(Status.COMPLETE,Status.IN_PROGRESS,Status.OPEN,Status.UAT_TEST));
-//
-//        return "employee/pending-task-update";
-//    }
-//
+    @GetMapping("/employee/pending-task/update/{id}")
+    public String updateTaskStatus(@PathVariable("id") Long id, Model model) {
+        TaskDTO task = taskService.findById(id);
+        List<TaskDTO> tasks = taskService.listAllTasksByProjectManager();
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("task", task);
+        model.addAttribute("users", userService.listAllByRole("Employee"));
+        model.addAttribute("projects", projectService.listAllProjects());
+        model.addAttribute("statusList", Status.values());
+
+        return "employee/pending-task-update";
+    }
+
 //    @PostMapping("/employee/pending-task/update/{id}")
 //    public String editTaskByEmployee(@PathVariable("id") Long id, TaskDTO task) {
 //
@@ -95,15 +98,12 @@ public class TaskController {
 //        return "redirect:/task/employee/pending-tasks";
 //    }
 //
-//    @GetMapping("/employee/pending-tasks")
-//    public String getTaskByEmployee(Model model){
-//
-//        UserDTO employee = userService.findById("craig@cybertek.com");
-//
-//        model.addAttribute("tasks", taskService.findTaskByEmployee(employee));
-//
-//        return "employee/pending-tasks";
-//    }
-//
+    @GetMapping("/employee/pending-tasks")
+    public String getTaskByEmployee(Model model){
+        List<TaskDTO> tasks = taskService.listAllTasksByStatusIsNot(Status.COMPLETE);
+        model.addAttribute("tasks", tasks);
+        return "employee/pending-tasks";
+    }
+
 
 }
