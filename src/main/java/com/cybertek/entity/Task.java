@@ -44,4 +44,5 @@ public class Task extends BaseEntity {
 //    private String taskDetail;
 //    private Status taskStatus;
 //    private LocalDate assignedDate;
+
 }

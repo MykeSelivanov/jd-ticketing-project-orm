@@ -45,5 +45,4 @@ public class BaseEntity {
         this.lastUpdateUserId = 1L;
     }
 
-
 }
