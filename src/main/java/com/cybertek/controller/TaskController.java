@@ -76,6 +76,8 @@ public class TaskController {
     @GetMapping("/employee/pending-task/update/{id}")
     public String updateTaskStatus(@PathVariable("id") Long id, Model model) {
         TaskDTO task = taskService.findById(id);
+        // TODO We probably should not filter on a manager, but on an employee
+        //  the same way we do for @GetMapping("/employee/pending-tasks")
         List<TaskDTO> tasks = taskService.listAllTasksByProjectManager();
 
         model.addAttribute("tasks", tasks);
