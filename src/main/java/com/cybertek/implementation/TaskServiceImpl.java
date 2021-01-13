@@ -81,6 +81,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public void updateStatus(TaskDTO taskDTO) {
+        Optional<Task> taskEntity = taskRepository.findById(taskDTO.getId());
+
+        if (taskEntity.isPresent()) {
+            taskEntity.get().setTaskStatus(taskDTO.getTaskStatus());
+            taskRepository.save(taskEntity.get());
+        }
+    }
+
+    @Override
     public int totalNonCompletedTasks(String projectCode) {
         return taskRepository.totalNonCompletedTasks(projectCode);
     }
@@ -114,6 +124,13 @@ public class TaskServiceImpl implements TaskService {
         User user = userRepository.findByUserName("mikesmith@gmail.com");
         List<Task> tasks = taskRepository.findAllByProjectAssignedManager(user);
         return tasks.stream().map(taskMapper::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> listAllTasksByStatus(Status status) {
+        User userEntity = userRepository.findByUserName("Nils.Kemmer19");
+        List<Task> taskEntitiesList = taskRepository.findAllByTaskStatusAndAssignedEmployee(status, userEntity);
+        return taskEntitiesList.stream().map(taskMapper::convertToDTO).collect(Collectors.toList());
     }
 
 }

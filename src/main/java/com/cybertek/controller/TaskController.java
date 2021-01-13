@@ -76,9 +76,7 @@ public class TaskController {
     @GetMapping("/employee/pending-task/update/{id}")
     public String updateTaskStatus(@PathVariable("id") Long id, Model model) {
         TaskDTO task = taskService.findById(id);
-        // TODO We probably should not filter on a manager, but on an employee
-        //  the same way we do for @GetMapping("/employee/pending-tasks")
-        List<TaskDTO> tasks = taskService.listAllTasksByProjectManager();
+        List<TaskDTO> tasks = taskService.listAllTasksByStatusIsNot(Status.COMPLETE);
 
         model.addAttribute("tasks", tasks);
         model.addAttribute("task", task);
@@ -89,22 +87,24 @@ public class TaskController {
         return "employee/pending-task-update";
     }
 
-//    @PostMapping("/employee/pending-task/update/{id}")
-//    public String editTaskByEmployee(@PathVariable("id") Long id, TaskDTO task) {
-//
-//        TaskDTO taskToUpdate = taskService.findById(id);
-//        taskToUpdate.setTaskStatus(task.getTaskStatus());
-//
-//        taskService.update(taskToUpdate);
-//
-//        return "redirect:/task/employee/pending-tasks";
-//    }
-//
+    @PostMapping("/employee/pending-task/update/{id}")
+    public String editTaskByEmployee(@PathVariable("id") Long id, TaskDTO taskDTO) {
+        taskService.updateStatus(taskDTO);
+        return "redirect:/task/employee/pending-tasks";
+    }
+
     @GetMapping("/employee/pending-tasks")
     public String getTaskByEmployee(Model model){
         List<TaskDTO> tasks = taskService.listAllTasksByStatusIsNot(Status.COMPLETE);
         model.addAttribute("tasks", tasks);
         return "employee/pending-tasks";
+    }
+
+    @GetMapping("/employee/archive")
+    public String getArchivedProjects(Model model){
+        List<TaskDTO> tasks = taskService.listAllTasksByStatus(Status.COMPLETE);
+        model.addAttribute("tasks", tasks);
+        return "employee/archive";
     }
 
 
