@@ -85,6 +85,21 @@ public class ProjectController {
         return "redirect:/project/manager/complete";
     }
 //
+    /** Employee archive part moved to TaskController
+     * keeping related methods
+     * might be reused somewhere
+     */
+//
+//    @GetMapping("/employee/archive")
+//    public String getArchivedProjects(Model model){
+//        checkTheProjectsStatus();
+//        List<TaskDTO> archivedTasks = getArchivedProjectsWithTasks();
+//
+//        model.addAttribute("archivedTasks", archivedTasks);
+//
+//        return "employee/archive";
+//    }
+//
 //    List<ProjectDTO> getCountedListOfProjectDTO(UserDTO manager){
 //        List<ProjectDTO> list = projectService
 //                .findAll()
@@ -103,16 +118,6 @@ public class ProjectController {
 //
 //                }).collect(Collectors.toList());
 //        return list;
-//    }
-//
-//    @GetMapping("/employee/archive")
-//    public String getArchivedProjects(Model model){
-//        checkTheProjectsStatus();
-//        List<TaskDTO> archivedTasks = getArchivedProjectsWithTasks();
-//
-//        model.addAttribute("archivedTasks", archivedTasks);
-//
-//        return "employee/archive";
 //    }
 //
 //    List<TaskDTO> getArchivedProjectsWithTasks(){
