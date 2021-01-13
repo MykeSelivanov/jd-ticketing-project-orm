@@ -94,4 +94,10 @@ public class ProjectServiceImpl implements ProjectService {
         taskService.deleteByProject(projectMapper.convertToDto(projectEntity));
     }
 
+    @Override
+    public List<ProjectDTO> readAllByAssignedManager(User user) {
+        List<Project> projectEntities = projectRepository.findAllByAssignedManager(user);
+        return projectEntities.stream().map(projectMapper::convertToDto).collect(Collectors.toList());
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.cybertek.service;
 
 import com.cybertek.dto.UserDTO;
+import com.cybertek.entity.User;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public interface UserService {
     void delete(String username);
     void deleteByUserName(String username);
 
+    Boolean checkIfUserCanBeDeleted(User user);
 
 }

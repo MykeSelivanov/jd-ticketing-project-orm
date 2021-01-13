@@ -1,9 +1,14 @@
 package com.cybertek.implementation;
 
+import com.cybertek.dto.ProjectDTO;
+import com.cybertek.dto.TaskDTO;
 import com.cybertek.dto.UserDTO;
+import com.cybertek.entity.Project;
 import com.cybertek.entity.User;
 import com.cybertek.mapper.UserMapper;
 import com.cybertek.repository.UserRepository;
+import com.cybertek.service.ProjectService;
+import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -17,11 +22,15 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     UserMapper userMapper;
+    ProjectService projectService;
+    TaskService taskService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, ProjectService projectService, TaskService taskService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @Override
@@ -74,6 +83,20 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> listAllByRole(String role) {
         List<User> users = userRepository.findAllByRoleDescriptionIgnoreCase(role);
         return users.stream().map(user -> userMapper.convertToDto(user)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean checkIfUserCanBeDeleted(User user) {
+        switch (user.getRole().getDescription()) {
+            case "Manager":
+                List<ProjectDTO> projects = projectService.readAllByAssignedManager(user);
+                return projects.size() == 0;
+            case "Employee":
+                List<TaskDTO> tasks = taskService.readAllByAssignedEmployee(user);
+                return tasks.size() == 0;
+            default:
+                return true;
+        }
     }
 
 }
