@@ -15,7 +15,6 @@ public class RoleDTOConverter implements Converter<String,RoleDTO> {
 
     @Autowired
     public RoleDTOConverter(RoleService roleService) {
-
         this.roleService = roleService;
     }
 

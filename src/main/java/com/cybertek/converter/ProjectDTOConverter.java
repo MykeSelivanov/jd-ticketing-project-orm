@@ -15,7 +15,6 @@ public class ProjectDTOConverter implements Converter<String, ProjectDTO> {
 
     @Autowired
     public ProjectDTOConverter(ProjectService projectService) {
-
         this.projectService = projectService;
     }
 
