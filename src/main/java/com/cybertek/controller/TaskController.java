@@ -46,7 +46,6 @@ public class TaskController {
     @PostMapping("/create")
     public String insertTask(Model model, TaskDTO task){
         taskService.save(task);
-
         return "redirect:/task/create";
     }
 
@@ -68,7 +67,6 @@ public class TaskController {
     @PostMapping("/update/{id}")
     public String editTask(@PathVariable("id") Long id, TaskDTO task, Model model) {
         taskService.update(task);
-
         return "redirect:/task/create";
     }
 
